@@ -1,0 +1,89 @@
+# Config format schema number
+###################
+## Dataset options
+dataset_params:
+  height: 128
+  width: 128
+  num_classes: 10
+  train_data_loader:
+    data_path: "/home/ubuntu/lcl/cvpr2025/classification/data/dataset/cifar10_dvs"
+    mode: "training"
+    batch_size: 4
+    shuffle: True
+    num_workers: 4
+    pin_memory: True
+    augmentation: True
+    device: "cuda:0"
+    # interpolate: "F.interpolate(d[0].unsqueeze(0), size=(224,224), mode='bilinear', align_corners=False)"
+    # event: "RasEventCloud_preprocess(flow, 8192, 24)"     
+    # grid_size: 0.01
+
+  val_data_loader:
+    data_path: "/home/ubuntu/lcl/cvpr2025/classification/data/dataset/cifar10_dvs"
+    mode: "testing"
+    shuffle: False
+    batch_size: 4
+    shuffle: False
+    num_workers: 4
+    pin_memory: True
+    augmentation: False
+    device: "cuda:0"
+
+  test_data_loader:
+    data_path: "/home/ubuntu/lcl/cvpr2025/classification/data/dataset/cifar10_dvs"
+    mode: "testing"
+    shuffle: False
+    batch_size: 4
+    shuffle: False
+    num_workers: 4
+    pin_memory: True
+    augmentation: False
+    device: "cuda:0"
+
+
+###################
+## Train params
+train_params:
+  max_num_epochs: 120
+  learning_rate: 1e-4
+  optimizer: Adam  # [SGD, Adam]
+  betas: 
+    - 0.5
+    - 0.999
+  momentum: 0.9
+  lr_scheduler: ExponentialLR  # [StepLR, ReduceLROnPlateau, CosineAnnealingLR, CosineAnnealingWarmRestarts]
+  lr_lambda: 0.5
+  final_lr: 0.001
+  save_every_n_epochs: 1
+  T0: 8
+  T_mult: 2
+  # loss: crossentropty(epsilon)
+
+
+# model_params:
+#   get_model:
+#     embedding_size: 64
+#     att2: False
+#     att: False
+#     fc: 'resnet34'
+
+#   dela:
+#     depths: [4, 4, 4, 4]
+#     ks: [64, 64, 64, 64]
+#     dims: [64, 128, 256, 384]  
+#     ns: [4096, 1024, 384, 128]
+#     head_dim: 64
+
+#   ptv3:
+#     in_channels: 5
+#     order: "z", "z-trans", "hilbert", "hilbert-trans"
+#     stride: [2, 2, 2, 2]
+#     enc_depths: [2, 2, 2, 6, 2]
+#     enc_channels: [16, 32, 64, 128, 256]
+#     enc_num_head: [2, 4, 8, 16, 32]
+#     enc_patch_size: [256, 256, 256, 256, 256]
+#     dec_depths: [2, 2, 2, 2]
+#     dec_channels: [64, 64, 96, 128]
+#     dec_num_head: [4, 4, 8, 16]
+#     dec_patch_size: [256, 256, 256, 256]
+#     mlp_ratio: 4
